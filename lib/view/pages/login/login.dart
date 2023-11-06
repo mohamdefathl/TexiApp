@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxiapp/constant/color.dart';
-import 'package:taxiapp/view/widget/button.dart';
-import 'package:taxiapp/view/widget/inputFiled.dart';
+import 'package:taxiapp/view/widget/login/button.dart';
+import 'package:taxiapp/view/widget/login/inputFiled.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});

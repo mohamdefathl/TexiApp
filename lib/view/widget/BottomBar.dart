@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:taxiapp/constant/color.dart';
 import 'package:taxiapp/view/pages/dashboard.dart';
-import 'package:taxiapp/view/pages/login.dart';
+import 'package:taxiapp/view/pages/login/login.dart';
 import 'package:taxiapp/view/pages/map.dart';
-import 'package:taxiapp/view/pages/orders.dart';
+import 'package:taxiapp/view/pages/home/orders.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

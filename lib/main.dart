@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:taxiapp/constant/color.dart';
-import 'package:taxiapp/view/widget/home.dart';
-import 'package:taxiapp/view/pages/login.dart';
+import 'package:taxiapp/view/widget/BottomBar.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Taxi',      
       theme: themeData(),      
@@ -25,8 +24,7 @@ class MyApp extends StatelessWidget {
 }
 ThemeData themeData() {
     return ThemeData(
-      fontFamily: "Cairo",
-      // fontFamily: "PlayfairDisplay",
+      fontFamily: "Cairo",      
       textTheme: const TextTheme(
         titleLarge:
             TextStyle(fontWeight: FontWeight.bold, fontSize: 30, height: 2),

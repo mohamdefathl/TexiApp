@@ -10,10 +10,10 @@ class SimpleLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 7),
+        margin:const EdgeInsets.symmetric(vertical: 7),
         width: MediaQuery.of(context).size.width * 0.8,
         height: 1.5,
-        decoration: BoxDecoration(color: AppColor.primary),
+        decoration:const BoxDecoration(color: AppColor.primary),
       ),
     );
   }
