@@ -9,6 +9,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.blackSecond,
         // resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           reverse: true,
@@ -21,7 +22,7 @@ class Login extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/login.png',
+                    'assets/images/loginpage.png',
                     width: 350, 
                     height: 350,
                   ),

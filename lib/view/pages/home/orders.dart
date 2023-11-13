@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taxiapp/constant/color.dart';
 import 'package:taxiapp/constant/mapconstart.dart';
+import 'package:taxiapp/view/widget/elevatedButton.dart';
 import 'package:taxiapp/view/widget/home/order.dart';
 import 'package:taxiapp/view/widget/home/order.dart';
 
@@ -9,24 +11,24 @@ class Orders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:CustomElevatedButton(
+                onPressed: () {}, title: "ترتيب الطلبات حسب الاقرب") ,
+      backgroundColor: AppColor.blackSecond,
       appBar: AppBar(
+        backgroundColor: AppColor.blackSecond,
         centerTitle: true,
         title: Text(
           "الطلبات",
           style: Theme.of(context).textTheme.titleLarge,
         ),
         scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.transparent,
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.e,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  orderLocationByNearest();
-                },
-                child: Text("data")),
+            
             Order(
               sourceLocation: "صنعاء -الاصبحي شارع حده قدام الحسحسي ",
               destinationLocation:
@@ -47,6 +49,7 @@ class Orders extends StatelessWidget {
               destinationLocation:
                   "حضرموت فسفس عن يسيس صثصث ضضصققيشسي شسي شسيش سيشسيشس",
             ),
+            SizedBox(height: 90,)
           ],
         ),
       ),

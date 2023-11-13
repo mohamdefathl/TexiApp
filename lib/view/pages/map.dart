@@ -3,6 +3,9 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:math';
 
+import 'package:taxiapp/constant/color.dart';
+import 'package:taxiapp/constant/google_mapStyle.dart';
+
 class CustomMap extends StatefulWidget {
   const CustomMap({super.key});
 
@@ -11,7 +14,8 @@ class CustomMap extends StatefulWidget {
 }
 
 class _CustomMapState extends State<CustomMap> {
-  GoogleMapController? mapController; // Controller for Google map
+  GoogleMapController? mapController;
+
   PolylinePoints polylinePoints = PolylinePoints();
 
   String googleAPiKey = "AIzaSyDd6KTBqtVuQgTW-rSgGVUUzcJ2C2P1o10";
@@ -54,7 +58,11 @@ class _CustomMapState extends State<CustomMap> {
     super.initState();
   }
 
+  bool loading = false;
   Future<void> getDirections() async {
+    setState(() {
+      loading = true;
+    });
     List<LatLng> polylineCoordinates = [];
 
     List<Marker> unsortedMarkers = markers.toList();
@@ -109,24 +117,34 @@ class _CustomMapState extends State<CustomMap> {
       );
     }
 
-    setState(() {
-      distance = totalDistance;
-    });
+    try {
+      setState(() {
+        distance = totalDistance;
+      });
+    } catch (e) {}
 
     addPolyLine(polylineCoordinates);
+    try {
+      setState(() {
+        loading = false;
+      });
+    } catch (e) {}
   }
 
   void addPolyLine(List<LatLng> polylineCoordinates) {
     PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
       polylineId: id,
-      color: Colors.blue,
+      color: AppColor.primary,
       points: polylineCoordinates,
       width: 8,
     );
     polylines[id] = polyline;
-    setState(() {});
+    try {
+      setState(() {});
+    } catch (e) {}
   }
+
   double calculateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;
     var a = 0.5 -
@@ -134,65 +152,78 @@ class _CustomMapState extends State<CustomMap> {
         cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
     return 12742 * asin(sqrt(a));
   }
+
   String calculateCost() {
-    return (distance * 1000 * 0.2).toString();
+    return (distance * 1000 * 0.2).toStringAsFixed(1);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        print(distance);
-      }),
-      body: Stack(
-        children: [
-          GoogleMap(
-            zoomGesturesEnabled: true,
-            initialCameraPosition: CameraPosition(
-              target: startLocation,
-              zoom: 14.0,
+    return Stack(
+      children: [
+        loading
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "حساب القيمة والمسافة",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const CircularProgressIndicator(
+                    color: AppColor.primary,
+                  ),
+                ],
+              )
+            : GoogleMap(
+              zoomGesturesEnabled: true,
+              initialCameraPosition: CameraPosition(
+                target: startLocation,
+                zoom: 14.0,
+              ),
+              markers: markers,
+              polylines: Set<Polyline>.of(polylines.values),
+              mapType: MapType.normal,
+              onMapCreated: (controller) {
+                setState(() {
+                  mapController = controller;
+                  mapController!.setMapStyle(mapstyle);
+                });
+              },
             ),
-            markers: markers,
-            polylines: Set<Polyline>.of(polylines.values),
-            mapType: MapType.normal,
-            onMapCreated: (controller) {
-              setState(() {
-                mapController = controller;
-              });
-            },
-          ),
-          Positioned(
-            bottom: 200,
-            left: 0,
-            child: Container(
-              child: Card(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "Total Distance: " + (distance * 1000).toString() + " KM",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Positioned(
+          bottom: 30,
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: Card(
+                  child: Container(
+                    decoration: BoxDecoration(color: AppColor.blackSecond),
+                    padding: EdgeInsets.all(4),
+                    child: Text(
+                      "المسافة:  ${(distance * 1000).toStringAsFixed(1)}",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-          Positioned(
-            bottom: 100,
-            left: 0,
-            child: Container(
-              child: Card(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "Total Cost: " + calculateCost().toString() + " ريال",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Container(
+                child: Card(
+                  child: Container(
+                    decoration: BoxDecoration(color: AppColor.blackSecond),
+                    padding: EdgeInsets.all(4),
+                    child: Text(
+                      "تكلفة النقل: " + calculateCost() + " ريال",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

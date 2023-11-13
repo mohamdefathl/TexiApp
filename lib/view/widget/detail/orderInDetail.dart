@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxiapp/constant/color.dart';
 import 'package:taxiapp/view/widget/detail/orderitemlist.dart';
 
 class OrderInDetail extends StatelessWidget {
@@ -12,6 +13,7 @@ class OrderInDetail extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10),
         // height: 300,
         child: Card(
+          color: AppColor.black,
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(

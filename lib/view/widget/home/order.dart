@@ -21,6 +21,7 @@ class Order extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 7),
         width: MediaQuery.of(context).size.width * 0.9,
         child: Card(
+          color: AppColor.black,
           elevation: 2,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
