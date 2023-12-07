@@ -18,17 +18,17 @@ class OrderRowFromTo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Flexible(
-          child: Text(
-            location,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
-            textAlign: TextAlign.end,
-          ),
-        ),
+            child: Text(
+          location,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 3,
+          textAlign: TextAlign.end,
+          style: Theme.of(context).textTheme.titleSmall,
+        )),
         const SizedBox(width: 8), //
         Text(
           " : $title",
-          style:const TextStyle(color: AppColor.primary),
+          style:Theme.of(context).textTheme.titleSmall!.copyWith(color: AppColor.primary),
         )
       ],
     );

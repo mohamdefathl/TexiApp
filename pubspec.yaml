@@ -39,6 +39,21 @@ dependencies:
   geolocator: ^8.0.5
   geocoding: ^2.1.1       
   flutter_polyline_points: ^1.0.0 
+  http: ^0.13.6
+  shared_preferences: ^2.2.2
+  connectivity_plus: ^5.0.2
+  dartz: ^0.10.1
+  collection: ^1.17.1
+  get: ^4.6.5
+  iconsax: ^0.0.8
+  url_launcher: ^6.0.0
+  intl: ^0.18.1
+  lottie: ^2.4.0  
+  slide_to_act: ^2.0.2
+  sliding_up_panel: ^2.0.0+1
+  
+
+  # get_storage: ^2.1.1
   # flutter_svg: ^2.0.8
   
 
@@ -65,10 +80,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/images/login.png
-    - assets/images/loginpage.png
-    
+  assets:  
+    - assets/images/                
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
