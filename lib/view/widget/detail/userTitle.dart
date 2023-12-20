@@ -15,12 +15,12 @@ class UserTitleDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 6),
+      padding:const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
           Icon(
             icon,
-            color: AppColor.primary,
+            color: Theme.of(context).colorScheme.primary,
           ),
           const SizedBox(
             width: 5,

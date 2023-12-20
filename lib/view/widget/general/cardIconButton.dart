@@ -14,7 +14,6 @@ class CardIconButtonAppBar extends StatelessWidget {
     return GestureDetector(
       onTap: onCLick,
       child: Card(
-        elevation: 4,
         shadowColor: Theme.of(context).colorScheme.shadow,
         child: Padding(
           padding: const EdgeInsets.all(13),

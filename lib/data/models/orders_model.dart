@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class OrderModel {
   int? id;
   Customer? customer;
@@ -36,7 +38,6 @@ class OrderModel {
     List<OrderItem> orderItems =
         orderItemsJson.map((item) => OrderItem.fromJson(item)).toList();
 
-    
     Map<int, FacilityOrderInfo> groupedOrderItems = {};
     for (OrderItem item in orderItems) {
       int facilityId = item.product!.category!.facility!.id;
@@ -49,8 +50,8 @@ class OrderModel {
           address: item.product!.category!.facility!.address,
           phone: item.product!.category!.facility!.phone,
           image: item.product!.category!.facility!.image,
-          latitude: item.product!.category!.facility!.latitude,
-          longitude: item.product!.category!.facility!.longitude,
+          latitude:  item.product!.category!.facility!.latitude,
+          longitude:  item.product!.category!.facility!.longitude,
           orderItems: [item],
         );
       }
@@ -96,7 +97,6 @@ class FacilityOrderInfo {
     required this.longitude,
   });
 }
-
 
 class Customer {
   String? firstName;
@@ -201,7 +201,6 @@ class Facility {
     required this.address,
     required this.latitude,
     required this.longitude,
-
   });
 
   factory Facility.fromJson(Map<String, dynamic> json) {
@@ -211,7 +210,7 @@ class Facility {
       fullName: json['full_name'],
       phone: json['phone'],
       address: json['address'],
-       latitude: json['latitude'],
+      latitude: json['latitude'],
       longitude: json['longitude'],
     );
   }

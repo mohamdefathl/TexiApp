@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class PriceTitleDetailPage extends StatelessWidget {
-  const PriceTitleDetailPage({
-    super.key,
-    required this.title,
-    required this.price,
-  });
+  const PriceTitleDetailPage(
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.isFinal});
   final String title;
   final String price;
+  final bool isFinal;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,16 @@ class PriceTitleDetailPage extends StatelessWidget {
           const Spacer(),
           Text(
             title,
-            style: Theme.of(context).textTheme.titleSmall,
+            style: !isFinal
+                ? Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(color: Colors.grey)
+                : Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 13
+                    ),
           ),
         ],
       ),

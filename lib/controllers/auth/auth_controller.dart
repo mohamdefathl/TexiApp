@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  final RxString _token = ''.obs;
+   String token='';
+   String role='';
 
   void setToken(String value) {
-    _token.value = value;
+    token = value;
+  }
+  void setRole(String value) {
+    role = value;
   }
 }

@@ -1,5 +1,7 @@
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
+import 'package:taxiapp/controllers/auth/auth_controller.dart';
 import 'package:taxiapp/core/checkinternet.dart';
 import 'dart:convert';
 
@@ -24,18 +26,19 @@ class FetchApi {
     }
   }
 
-  Future<Either<StatusRequest, Map>> getData(String urllink,
-      {String? token}) async {
+  Future<Either<StatusRequest, Map>> getData(
+      String urllink, String token) async {
     try {
       if (await checkInternet()) {
         var response = await http.get(
           Uri.parse(urllink),
           headers: {
-            'Authorization': 'Token 46c660b365d3224d06f560be5f0bd209e6119893',
+            'Authorization': 'Token $token',
+            // 'Authorization': 'Token 5ed29fbc5bc2fdb1e1f9b1c0db8f72f6c65235dc',
             'Content-Type': 'application/json',
           },
-        );
-
+        );      
+        
         if (response.statusCode == 200 || response.statusCode == 201) {
           final String decodedBody = utf8.decode(response.bodyBytes);
           Map responseBody = jsonDecode(decodedBody);

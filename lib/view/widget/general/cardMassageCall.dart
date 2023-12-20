@@ -25,16 +25,21 @@ class CardMassageCall extends StatelessWidget {
           throw "Error occured trying to call that number.";
         }
       },
-      child: Card(
-        elevation: 3,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Theme.of(context).colorScheme.scrim,
+      child: Container(
+        // elevation: 3,
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        // color: Theme.of(context).colorScheme.scrim,
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.scrim,
+            borderRadius: BorderRadius.circular(30),
+            border:
+                Border.all(color: Theme.of(context).colorScheme.surfaceTint)),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8),
           child: Icon(
             icon,
             color: iconColor,
-            size: 24,
+            size: 20,
           ),
         ),
       ),

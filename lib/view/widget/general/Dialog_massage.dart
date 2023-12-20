@@ -1,36 +1,61 @@
 import 'dart:convert';
+import 'package:osrm/osrm.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class DistanceCalculator {
-  static const String _apiKey = 'AIzaSyDd6KTBqtVuQgTW-rSgGVUUzcJ2C2P1o10';
+import 'dart:math';
 
-  static Future<double> calculateDistance(
-      LatLng origin, LatLng destination) async {
-    final String url =
-        'https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&mode=walking&key=$_apiKey';
+double calculateDistance(
+    double startLat, double startLng, double endLat, double endLng) {
+  const double earthRadius = 6371; // in kilometers
 
-    final response = await http.get(Uri.parse(url));
+  double dLat = _toRadians(endLat - startLat);
+  double dLng = _toRadians(endLng - startLng);
 
-    if (response.statusCode == 200) {
-      final decodedData = jsonDecode(response.body);
+  double a = sin(dLat / 2) * sin(dLat / 2) +
+      cos(_toRadians(startLat)) *
+          cos(_toRadians(endLat)) *
+          sin(dLng / 2) *
+          sin(dLng / 2);
 
-      final distanceText =
-          decodedData['routes'][0]['legs'][0]['distance']['text'];
-      final distanceValue =
-          decodedData['routes'][0]['legs'][0]['distance']['value'];
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
-      print('Distance: $distanceText');
-
-      return distanceValue.toDouble();
-    } else {
-      throw Exception('Failed to calculate distance');
-    }
-  }
+  double distance = earthRadius * c;
+  return distance;
 }
 
-// Example usage
+double _toRadians(double degree) {
+  return degree * (pi / 180);
+}
+
+double distance = calculateDistance(15.282007960914436, 44.226211406738514,
+    15.282804196221251, 44.22927981723555);
+
+//   }
+
+Future<double> suckMy(LatLng start, LatLng end) async {
+  final String osrmEndpoint =
+      'http://your_osrm_server_ip:5000/route/v1/driving/${start.longitude},${start.latitude};${end.longitude},${end.latitude}?steps=true';
+
+  try {
+    final http.Response response = await http.get(Uri.parse(osrmEndpoint));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      // Parse the response and extract distance information
+      double distance = data['routes'][0]['distance'].toDouble();
+      print(distance);
+      return distance;
+    } else {
+      throw Exception('Failed to load route data');
+    }
+  } catch (e) {
+    print('Error: $e');
+    throw Exception('Failed to connect to the OSRM server');
+  }
+}
 
 class CalculateMap extends StatefulWidget {
   const CalculateMap({super.key});
@@ -40,41 +65,38 @@ class CalculateMap extends StatefulWidget {
 }
 
 class _CalculateMapState extends State<CalculateMap> {
-  LatLng origin = LatLng(
-      15.282007960914436, 44.226211406738514); // Example origin coordinates
-  LatLng destination = LatLng(
-      15.282804196221251, 44.22927981723555); // Example destination coordinates
-
-  double x = 0;
-  @override
-  void initState() {
-    super.initState();
-    calculateDistance();
-  }
-
-  bool loading = false;
-  void calculateDistance() async {
-    setState(() {
-      loading = true;
-    });
-    try {
-      final distance =
-          await DistanceCalculator.calculateDistance(origin, destination);
-      print('Distance in meters: ${distance}');
-      print(' Price: ${distance * 0.2}');
-      setState(() {
-        x = distance;
-      });
-    } catch (e) {
-      print('Error: $e');
-    }
-    setState(() {
-      loading = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Center(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(distance.toString()),
+            ElevatedButton(
+                onPressed: () async {
+                  // suckMy(LatLng(15.282804196221251, 44.22927981723555),
+                  //     LatLng(   15.282007960914436, 44.226211406738514));
+                  {
+                    final osrm = Osrm();
+
+                    final options = RouteRequest(
+                      coordinates: [
+                        (15.282804196221251, 44.22927981723555),
+                        (15.282007960914436, 44.226211406738514),
+                      ],
+                    );
+
+                    final route = await osrm.route(options);
+                    final droute = await osrm.source;
+                    
+                    print(droute);
+                  }
+                },
+                child: Text("data"))
+          ],
+        ),
+      ),
+    );
   }
 }

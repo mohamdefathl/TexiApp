@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:taxiapp/view/widget/general/cardMassageCall.dart';
+import 'package:taxiapp/constant/color.dart';
+import 'package:taxiapp/data/models/ongoaing_model.dart';
+import 'package:taxiapp/view/widget/general/CardMessageRow.dart';
 
 class PanelWidget extends StatelessWidget {
   const PanelWidget(
-      {Key? key, required this.controller, required this.panelController})
+      {Key? key,
+      required this.controller,
+      required this.panelController,
+      required this.onGoaingOrderModel, required this.onClickCancel, required this.onClickDeliverd, required this.onClickChat})
       : super(key: key);
 
   final ScrollController controller;
   final PanelController panelController;
+  final OnGoaingOrderModel onGoaingOrderModel;
+  final VoidCallback  onClickCancel;
+  final VoidCallback onClickDeliverd;
+  final VoidCallback onClickChat;
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +25,22 @@ class PanelWidget extends StatelessWidget {
       padding: EdgeInsets.zero,
       controller: controller,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 18,
         ),
         buildDragHandle(panelController),
-        SizedBox(
+        const SizedBox(
           height: 18,
         ),
         Text(
-          "الطلب # 3023",
+          "الطلب # ${onGoaingOrderModel.codeNumber}",
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(color: AppColor.primary),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(
@@ -40,54 +52,102 @@ class PanelWidget extends StatelessWidget {
               .copyWith(color: Colors.grey, fontSize: 12),
         ),
         SizedBox(
-          height: 18,
+          height: MediaQuery.of(context).size.height * 0.03,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.1,
+          ),
           child: Divider(),
         ),
         SizedBox(
-          height: 18,
+          height: MediaQuery.of(context).size.height * 0.03,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                CardMassageCall(
-                  icon: Icons.call,
-                  iconColor: Colors.greenAccent,
-                  service: 'tel',
-                  phoneNumber: "orderModel.customer!.phone!",
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CardMassageCall(
-                  icon: Icons.message,
-                  iconColor: Colors.blue,
-                  service: 'sms',
-                  phoneNumber: "orderModel.customer!.phone!",
-                )
-              ],
-            ),
+            CardMessageRow(
+                phoneNumber: "${onGoaingOrderModel.customer!.phone}"),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "محمد فضل الغرباني",
+                  onGoaingOrderModel.customer!.fullName!,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                  "778940511",
+                  "${onGoaingOrderModel.customer!.phone}",
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ],
             )
           ],
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.06,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              CardPanelWidget(
+                  onClick: onClickCancel,
+                  title: "الغاء",
+                  icon: Icons.cancel_presentation),
+              CardPanelWidget(
+                  onClick: onClickDeliverd,
+                  title: "تم الإيصال ",
+                  icon: Icons.check_rounded),
+              CardPanelWidget(
+                onClick: onClickChat,
+                title: "الدردشة ",
+                icon: Icons.chat,
+              ),
+            ],
+          ),
         )
       ],
+    );
+  }
+}
+
+class CardPanelWidget extends StatelessWidget {
+  const CardPanelWidget({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onClick,
+  });
+  final String title;
+  final IconData icon;
+  final VoidCallback onClick;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Column(
+        children: [
+          Card(
+            elevation: 1.3,
+            color: Theme.of(context).colorScheme.scrim,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Icon(
+                icon,
+                color: AppColor.primary,
+                size: 25,
+              ),
+            ),
+          ),
+          Text(
+            title,
+            style:
+                Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12),
+          )
+        ],
+      ),
     );
   }
 }

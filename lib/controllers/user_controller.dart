@@ -1,6 +1,9 @@
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 
-// class LoginController extends GetxController {
-//   final token = data['token'];
-//   final user=   data['user'];
-// }
+class UserController extends GetxController {
+  Map<String, dynamic>? user;
+
+  void setUserData(value) {
+    user = value;    
+  }
+}

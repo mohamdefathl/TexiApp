@@ -1,185 +1,126 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:taxiapp/constant/color.dart';
-import 'package:taxiapp/view/widget/home/order.dart';
+import 'package:taxiapp/controllers/delivery_controllers/history_static.dart';
+import 'package:taxiapp/controllers/delivery_controllers/histroy_controller.dart';
+import 'package:taxiapp/core/handlingdataview.dart';
+import 'package:taxiapp/data/models/delivery_history_static_model.dart';
+import 'package:taxiapp/data/models/delivryhistory_model.dart';
+import 'package:taxiapp/functions/hundlingdata.dart';
+import 'package:taxiapp/view/widget/history/appbarHistory.dart';
+import 'package:taxiapp/view/widget/history/cardStaticWidget.dart';
+import 'package:taxiapp/view/widget/history/deliverdOrdersCard.dart';
+import 'package:taxiapp/view/widget/history/pirsonalInformationWidget.dart';
+import 'package:taxiapp/view/widget/history/titleAligbHistoryPage.dart';
 
 class HistoryPage extends StatelessWidget {
-  const HistoryPage({super.key});
+  const HistoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextTheme themeText = Theme.of(context).textTheme;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "طلباتي",
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.97,
-                child: Card(
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        right: 0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface,
-                            borderRadius: BorderRadius.only(
-                              // topLeft: Radius.circular(30),
+      body: CustomScrollView(
+        slivers: [
+          HistoryPageAppBar(themeText: themeText),
+          const TitleAlignHistoryPage(
+            title: "المعلومات الشخصية",
+          ),
+          PersonalInformationWidget(),
+          const TitleAlignHistoryPage(
+            title: "إحصائيات الحساب",
+          ),
 
-                              bottomLeft: Radius.circular(300),
-                            ),
-                          ),
-                          width: MediaQuery.of(context).size.width * 0.65,
-                          height: MediaQuery.of(context).size.height * 0.29,
-                          // height:240,
-                        ),
-                      ),
-                      Column(
+          GetBuilder<HistoryControllerStatic>(
+            init: HistoryControllerStatic(),
+            builder: (_) {
+              return HandlingDataView(
+                statusRequest: _.statusRequest,
+                widget: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      final deliveryOrdersStatics =
+                          DeliveryOrdersStatics.fromJson(_.data[index]);
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "محمد فضل الغرباني",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(fontSize: 13),
-                                  ),
-                                  Text(
-                                    "778940511",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            color: Colors.grey, fontSize: 13),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                width: 0,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.all(18.0),
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/images/man.jpg'),
-                                  radius: 40,
-                                ),
-                              ),
-                            ],
+                          CardStaticsHistoryPage(
+                            themeText: themeText,
+                            value: double.parse(deliveryOrdersStatics.day.toString()),
+                            icon: Icons.credit_card,
+                            title: 'صافي اليوم',
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 40),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                // ClearYMDwidget(),
-                                ClearYMDwidget(
-                                  subTitle: "30",
-                                  title: 'التوصيلات',
-                                ),
-                                ClearYMDwidget(
-                                  subTitle: "2000 ريال",
-                                  title: 'اليوم',
-                                ),
-                                ClearYMDwidget(
-                                  subTitle: "10000 ريال",
-                                  title: 'الشهر',
-                                ),
-                                ClearYMDwidget(
-                                  subTitle: "ريال 120000",
-                                  title: 'السنة',
-                                ),
-                              ],
-                            ),
+                          
+                          CardStaticsHistoryPage(
+                            themeText: themeText,
+                            value: deliveryOrdersStatics.mounth,
+                            icon: Icons.wallet,
+                            title: "صافي الشهر",
+                          ),
+                          CardStaticsHistoryPage(
+                            themeText: themeText,
+                            value: deliveryOrdersStatics.year,
+                            icon: Icons.attach_money_sharp,
+                            title: "صافي السنه",
                           ),
                         ],
-                      ),
-                    ],
+                      );
+                    },
+                    childCount: _.data.length,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "الطلبات النشطة",
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "طلبات تم ايصالها",
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              // Order(),
-            ],
+              );
+            },
           ),
-        ),
+          const TitleAlignHistoryPage(
+            title: "طلبات تم ايصالها",
+          ),
+          GetBuilder<HistoryController>(
+            init: HistoryController(),
+            builder: (controller) {
+              return HandlingDataView(
+                statusRequest: controller.statusRequest,
+                widget: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      final deliveryHistory =
+                          DeliveryHistoryModel.fromJson(controller.data[index]);
+
+                      return Column(
+                        children: [
+                          DeliverdOrders(
+                              colorScheme: colorScheme,
+                              themeText: themeText,
+                              deliveryHistoryModel: deliveryHistory),
+                        ],
+                      );
+                    },
+                    childCount: controller.data.length,
+                  ),
+                ),
+              );
+            },
+          )
+          // SliverToBoxAdapter(
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       PersonalInformationWidget(),
+
+          //       DeliverdOrders(themeText: themeText),
+          //       DeliverdOrders(themeText: themeText),
+          //       SizedBox(
+          //         height: MediaQuery.of(context).size.height * 0.02,
+          //       )
+          //     ],
+          //   ),
+          // ),
+        ],
       ),
     );
-  }
-}
-
-class ClearYMDwidget extends StatelessWidget {
-  const ClearYMDwidget({
-    super.key,
-    required this.title,
-    required this.subTitle,
-  });
-  final String title;
-  final String subTitle;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        // elevation: 10,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border:
-              Border.all(width: 1, color: Theme.of(context).colorScheme.shadow),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text(
-                subTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(title, style: Theme.of(context).textTheme.titleSmall),
-            ],
-          ),
-        ));
   }
 }

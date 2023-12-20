@@ -29,6 +29,8 @@ class MoInput extends StatelessWidget {
           textInputAction: TextInputAction.next,
           validator: valid,
           controller: nameText,
+          cursorHeight: MediaQuery.of(context).size.height * 0.035,
+          
           style: TextStyle(
             color: Theme.of(context).colorScheme.secondary,
             fontWeight: FontWeight.w400,
