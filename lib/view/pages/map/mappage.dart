@@ -7,7 +7,7 @@ import 'package:taxiapp/controllers/map/panel_controller.dart';
 import 'package:taxiapp/data/models/ongoaing_model.dart';
 import 'package:taxiapp/view/pages/chat/chat.dart';
 
-import 'package:taxiapp/view/widget/map/mapwidget.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/map/mapwidget.dart';
 import 'package:taxiapp/view/widget/general/cardIconButton.dart';
 import 'package:taxiapp/view/widget/panelwidget.dart';
 
@@ -65,22 +65,7 @@ class MapPage extends StatelessWidget {
               ),
               body: Stack(
                 children: [
-                  customPanelController.loading
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "حساب القيمة والمسافة",
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const CircularProgressIndicator(
-                                color: AppColor.primary,
-                              ),
-                            ],
-                          ),
-                        )
-                      : MapboxPolylineExample(),
+                   MapboxPolylineExample(),
                   Positioned(
                     left: 0,
                     right: 0,

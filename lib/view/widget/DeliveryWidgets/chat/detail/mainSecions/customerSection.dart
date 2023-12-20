@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxiapp/data/models/orders_model.dart';
-import 'package:taxiapp/view/widget/detail/titlewithicon.dart';
-import 'package:taxiapp/view/widget/detail/userTitle.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/titlewithicon.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/userTitle.dart';
 import 'package:taxiapp/view/widget/general/CardMessageRow.dart';
 
 

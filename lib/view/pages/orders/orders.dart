@@ -8,7 +8,7 @@ import 'package:taxiapp/controllers/delivery_controllers/orders_controller.dart'
 import 'package:taxiapp/core/handlingdataview.dart';
 import 'package:taxiapp/data/models/orders_model.dart';
 import 'package:taxiapp/view/widget/general/cardIconButton.dart';
-import 'package:taxiapp/view/widget/orders/order.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/orders/order.dart';
 
 class Orders extends StatelessWidget {
   Orders({Key? key}) : super(key: key);

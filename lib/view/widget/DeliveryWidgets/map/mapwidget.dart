@@ -9,8 +9,9 @@ import 'package:taxiapp/controllers/map/map_controller.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapboxPolylineExample extends StatefulWidget {
-  const MapboxPolylineExample({super.key,});
-  
+  const MapboxPolylineExample({
+    super.key,
+  });
 
   @override
   _MapboxPolylineExampleState createState() => _MapboxPolylineExampleState();
@@ -22,6 +23,7 @@ class _MapboxPolylineExampleState extends State<MapboxPolylineExample> {
   GoogleMapController? mapController;
   List<LatLng> polylinePoints = [];
   List<Marker> markers = [];
+  bool loading = false;
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _MapboxPolylineExampleState extends State<MapboxPolylineExample> {
   }
 
   Future<void> fetchPolyline() async {
+    loading = true;
     const String mapboxAccessToken =
         'pk.eyJ1IjoibW9oYW1lZGZhdGhsMSIsImEiOiJjbHEzbWk4bjcwMWlnMmtvOGxrdDA1bWw0In0._1-fNp3XkCHpruRUgUBhzA';
     const String mapboxDirectionsApiUrl =
@@ -66,6 +69,7 @@ class _MapboxPolylineExampleState extends State<MapboxPolylineExample> {
             )
             .toList();
       });
+      loading = false;
     } else {
       throw Exception('Failed to fetch polyline');
     }
@@ -74,25 +78,31 @@ class _MapboxPolylineExampleState extends State<MapboxPolylineExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        onMapCreated: (GoogleMapController controller) {
-          mapController = controller;
-          Get.isDarkMode ? mapController!.setMapStyle(mapstyle) : null;
-        },
-        initialCameraPosition: CameraPosition(
-          target:customMapController.facilityCoordinates[0],
-          zoom: 15.0,
-        ),
-        markers: Set<Marker>.from(markers),
-        polylines: Set<Polyline>.from([
-          Polyline(
-            polylineId: PolylineId('route'),
-            points: polylinePoints,
-            color: Colors.blue,
-            width: 5,
-          ),
-        ]),
-      ),
+      body: loading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            )
+          : GoogleMap(
+              onMapCreated: (GoogleMapController controller) {
+                mapController = controller;
+                Get.isDarkMode ? mapController!.setMapStyle(mapstyle) : null;
+              },
+              initialCameraPosition: CameraPosition(
+                target: customMapController.facilityCoordinates[0],
+                zoom: 15.0,
+              ),
+              markers: Set<Marker>.from(markers),
+              polylines: Set<Polyline>.from([
+                Polyline(
+                  polylineId: PolylineId('route'),
+                  points: polylinePoints,
+                  color: Colors.blue,
+                  width: 5,
+                ),
+              ]),
+            ),
     );
   }
 }

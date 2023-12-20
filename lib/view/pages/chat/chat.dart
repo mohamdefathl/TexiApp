@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:taxiapp/controllers/message/message_controller.dart';
 import 'package:taxiapp/data/models/ongoaing_model.dart';
 
-import 'package:taxiapp/view/widget/chat/chatAppbar.dart';
-import 'package:taxiapp/view/widget/chat/chatinput.dart';
-import 'package:taxiapp/view/widget/chat/chatmessages.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/chat/chat/chatAppbar.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/chat/chat/chatinput.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/chat/chat/chatmessages.dart';
 import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatelessWidget {

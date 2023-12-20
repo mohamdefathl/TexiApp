@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taxiapp/data/models/taxi_orders_model.dart';
 import 'package:taxiapp/view/widget/general/CardMessageRow.dart';
 import 'package:taxiapp/view/widget/history/historyTitlewithIcon.dart';
-import 'package:taxiapp/view/widget/orders/order.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/orders/order.dart';
 
 class TaxiOrder extends StatelessWidget {
   const TaxiOrder(

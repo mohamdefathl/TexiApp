@@ -7,9 +7,9 @@ import 'package:taxiapp/controllers/taxi_controllers/taxiorders_controller.dart'
 import 'package:taxiapp/core/handlingdataview.dart';
 import 'package:taxiapp/data/models/taxi_orders_model.dart';
 import 'package:taxiapp/view/pages/taxiDetail/taxidetail.dart';
-import 'package:taxiapp/view/widget/taxiorder/taxiorder.dart';
-import 'package:taxiapp/view/widget/map/mapwidget.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:taxiapp/view/widget/TaxiWidgets/taxiorder/taxiorder.dart';
+
+
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';

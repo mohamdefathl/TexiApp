@@ -6,7 +6,7 @@ class CustomPanelController extends GetxController {
   RxDouble? fabHeight = 0.0.obs;
   double panelHeightOpen = 0.0;
   final double panelHeightClosed = 95.0;
-  bool loading = false;
+  
   final panelController = PanelController();
   @override
   void onInit() {
