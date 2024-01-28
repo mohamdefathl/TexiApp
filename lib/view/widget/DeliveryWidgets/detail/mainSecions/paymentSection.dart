@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxiapp/data/models/orders_model.dart';
-import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/priceTitle.dart';
-import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/titlewithicon.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/detail/priceTitle.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/detail/titlewithicon.dart';
 
 class DetailPagePaymentInfo extends StatelessWidget {
   const DetailPagePaymentInfo({

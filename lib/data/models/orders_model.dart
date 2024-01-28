@@ -1,81 +1,83 @@
-import 'dart:ffi';
-
 class OrderModel {
-  int? id;
-  Customer? customer;
-  String? codeNumber;
-  String? totalOrderPrice;
-  String? shippingCost;
-  String? totalPrice;
-  String? purePriceAfterDiscount;
-  double? latitude;
-  double? longitude;
-  String? address;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  List<OrderItem>? orderItems;
-  Map<int, FacilityOrderInfo>? groupedOrderItems;
+  final int id;
+  final Customer customer;
+  final String codeNumber;
+  final String totalOrderPrice;
+  final String shippingCost;
+  final String totalPrice;
+  final String purePriceAfterDiscount;
+  final double latitude;
+  final double longitude;
+  final String address;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final List<OrderItem> orderItems;
+  final Map<int, FacilityOrderInfo> groupedOrderItems;
 
   OrderModel({
-    this.id,
-    this.customer,
-    this.codeNumber,
-    this.totalOrderPrice,
-    this.shippingCost,
-    this.totalPrice,
-    this.purePriceAfterDiscount,
-    this.latitude,
-    this.longitude,
-    this.address,
-    this.createdAt,
-    this.updatedAt,
-    this.orderItems,
-    this.groupedOrderItems,
+    required this.id,
+    required this.customer,
+    required this.codeNumber,
+    required this.totalOrderPrice,
+    required this.shippingCost,
+    required this.totalPrice,
+    required this.purePriceAfterDiscount,
+    required this.latitude,
+    required this.longitude,
+    required this.address,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.orderItems,
+    required this.groupedOrderItems,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> orderItemsJson = json['order_items'];
-    List<OrderItem> orderItems =
-        orderItemsJson.map((item) => OrderItem.fromJson(item)).toList();
+    List<dynamic>? orderItemsJson = json['order_items'];
+    List<OrderItem> orderItems = orderItemsJson
+        ?.map((item) => OrderItem.fromJson(item))
+        .whereType<OrderItem>()
+        .toList() ?? [];
 
     Map<int, FacilityOrderInfo> groupedOrderItems = {};
     for (OrderItem item in orderItems) {
-      int facilityId = item.product!.category!.facility!.id;
-      if (groupedOrderItems.containsKey(facilityId)) {
-        groupedOrderItems[facilityId]!.orderItems.add(item);
-      } else {
-        groupedOrderItems[facilityId] = FacilityOrderInfo(
-          id: facilityId,
-          fullName: item.product!.category!.facility!.fullName,
-          address: item.product!.category!.facility!.address,
-          phone: item.product!.category!.facility!.phone,
-          image: item.product!.category!.facility!.image,
-          latitude:  item.product!.category!.facility!.latitude,
-          longitude:  item.product!.category!.facility!.longitude,
-          orderItems: [item],
-        );
+      int? facilityId =
+          item.product?.category?.facility?.id; // null-safe operators added
+      if (facilityId != null) {
+        if (groupedOrderItems.containsKey(facilityId)) {
+          groupedOrderItems[facilityId]!.orderItems.add(item);
+        } else {
+          groupedOrderItems[facilityId] = FacilityOrderInfo(
+            id: facilityId,
+            fullName: item.product?.category?.facility?.fullName ?? "",
+            address: item.product?.category?.facility?.address ?? "",
+            phone: item.product?.category?.facility?.phone ?? "",
+            image: item.product?.category?.facility?.image ?? "",
+            latitude: item.product?.category?.facility?.latitude ?? 0.0,
+            longitude: item.product?.category?.facility?.longitude ?? 0.0,
+            orderItems: [item],
+          );
+        }
       }
     }
 
     return OrderModel(
-      id: json['id'],
-      customer: Customer.fromJson(json['customer']),
-      codeNumber: json['code_number'],
-      totalOrderPrice: json['total_order_price'],
-      shippingCost: json['shipping_cost'],
-      totalPrice: json['total_price'],
-      purePriceAfterDiscount: json['pure_price_after_discount'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-      address: json['address'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      id: json['id'] ?? 0, // default value added
+      customer: Customer.fromJson(json['customer'] ?? {}), // default value added
+      codeNumber: json['code_number'] ?? "",
+      totalOrderPrice: json['total_order_price'] ?? "",
+      shippingCost: json['shipping_cost'] ?? "",
+      totalPrice: json['total_price'] ?? "",
+      purePriceAfterDiscount: json['pure_price_after_discount'] ?? "",
+      latitude: (json['latitude'] as num?)?.toDouble() ?? 0.0, // null-safe and default value added
+      longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0, // null-safe and default value added
+      address: json['address'] ?? "",
+      createdAt: DateTime.tryParse(json['created_at'] ?? "") ?? DateTime.now(), // null-safe and default value added
+      updatedAt: DateTime.tryParse(json['updated_at'] ?? "") ?? DateTime.now(), // null-safe and default value added
       orderItems: orderItems,
       groupedOrderItems: groupedOrderItems,
     );
   }
 }
-
 class FacilityOrderInfo {
   int id;
   String fullName;
@@ -161,7 +163,7 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       name: json['name'],
-      image: json['image'],
+      image: json['image'] ?? '',
       category: Category.fromJson(json['category']),
     );
   }
@@ -205,13 +207,13 @@ class Facility {
 
   factory Facility.fromJson(Map<String, dynamic> json) {
     return Facility(
-      id: json['id'],
-      image: json['image'],
-      fullName: json['full_name'],
-      phone: json['phone'],
-      address: json['address'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      id: json['id']??"",
+      image: json['image']??"",
+      fullName: json['full_name']??"",
+      phone: json['phone']??"",
+      address: json['address']??"",
+      latitude: json['latitude']??15.282804196221251,
+      longitude: json['longitude']??44.22927981723555,
     );
   }
 }

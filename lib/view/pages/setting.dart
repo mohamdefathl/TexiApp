@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taxiapp/constant/color.dart';
 import 'package:taxiapp/controllers/darkmode_controller.dart';
-import 'package:taxiapp/controllers/message/message_controller.dart';
+
 
 
 class Setting extends StatelessWidget {
@@ -102,15 +102,20 @@ class Setting extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Text(
-                          "تسجيل الخروج",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  color: Colors.redAccent,
-                                  decoration: TextDecoration.underline,
-                                  decorationThickness: 2),
+                        GestureDetector(
+                          onTap: (){
+                            controller.logout();
+                          },
+                          child: Text(
+                            "تسجيل الخروج",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                    color: Colors.redAccent,
+                                    decoration: TextDecoration.underline,
+                                    decorationThickness: 2),
+                          ),
                         ),
                       ],
                     ),

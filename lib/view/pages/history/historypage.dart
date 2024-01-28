@@ -50,7 +50,7 @@ class HistoryPage extends StatelessWidget {
                         children: [
                           CardStaticsHistoryPage(
                             themeText: themeText,
-                            value: double.parse(deliveryOrdersStatics.day.toString()),
+                            value: deliveryOrdersStatics.day,
                             icon: Icons.credit_card,
                             title: 'صافي اليوم',
                           ),

@@ -7,7 +7,7 @@ class CardStaticsHistoryPage extends StatelessWidget {
   });
 
   final TextTheme themeText;
-  final double value;
+  final int value;
   final IconData icon;
   final String title;
 

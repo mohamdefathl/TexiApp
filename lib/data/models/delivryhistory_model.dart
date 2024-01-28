@@ -1,6 +1,6 @@
 class DeliveryHistoryModel {
   final Customer customer;
-  final List<Facility> facilities; // Change this line
+  final List<Facility> facilities; 
   final String codeNumber;
   final String shippingCost;
   final String address;
@@ -9,7 +9,7 @@ class DeliveryHistoryModel {
 
   DeliveryHistoryModel({
     required this.customer,
-    required this.facilities, // Change this line
+    required this.facilities, 
     required this.codeNumber,
     required this.address,
 
@@ -19,14 +19,13 @@ class DeliveryHistoryModel {
   });
 
   factory DeliveryHistoryModel.fromJson(Map<String, dynamic> json) {
-    // Extract facilities data from order_items
     List<Facility> facilities = (json['order_items'] as List<dynamic>)
         .map((item) => Facility.fromJson(item['product']['category']['facility']))
         .toList();
 
     return DeliveryHistoryModel(
       customer: Customer.fromJson(json['customer']),
-      facilities: facilities, // Change this line
+      facilities: facilities, 
       codeNumber: json['code_number'],
       address: json['address'],
       shippingCost: json['shipping_cost'],

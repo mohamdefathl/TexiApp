@@ -42,10 +42,9 @@ class DeliverdOrders extends StatelessWidget {
                     decoration: BoxDecoration(
                       // color: Color(0xFFEEFCF5),
                       color: Theme.of(context).colorScheme.onInverseSurface,
-
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(20),                      
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     child: Text(
                       'تكلفة التوصيل ريال ${deliveryHistoryModel.shippingCost}',
                       style: themeText.titleSmall!

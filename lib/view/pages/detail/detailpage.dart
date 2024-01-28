@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:taxiapp/constant/color.dart';
 import 'package:taxiapp/data/models/orders_model.dart';
 import 'package:taxiapp/functions/getElapsedTime.dart';
-import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/mainSecions/customerSection.dart';
-import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/mainSecions/paymentSection.dart';
-import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/takeOrderButton.dart';
-import 'package:taxiapp/view/widget/DeliveryWidgets/chat/detail/titlewithicon.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/detail/mainSecions/customerSection.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/detail/mainSecions/paymentSection.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/detail/takeOrderButton.dart';
+import 'package:taxiapp/view/widget/DeliveryWidgets/detail/titlewithicon.dart';
 import 'package:taxiapp/view/widget/general/CardMessageRow.dart';
 import 'package:taxiapp/view/widget/general/cardIconButton.dart';
 

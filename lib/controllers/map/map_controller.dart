@@ -2,7 +2,6 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxiapp/data/models/ongoaing_model.dart';
-import 'package:taxiapp/data/models/orders_model.dart';
 import 'dart:math';
 
 class CustomMapController extends GetxController {

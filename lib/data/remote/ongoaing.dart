@@ -6,8 +6,7 @@ class OnGoaingPageData {
   OnGoaingPageData(this.fetchApi);
 
   getData(token) async {
-    var response = await fetchApi.getData(AppApiUrl.onGoaing,token);
-    // print(response);
+    var response = await fetchApi.getData(AppApiUrl.onGoaing,token);    
     return response.fold((l) => l, (r) => r);
   }
 }

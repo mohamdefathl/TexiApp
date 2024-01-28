@@ -4,11 +4,13 @@ import 'package:taxiapp/controllers/login_controller.dart';
 import 'package:taxiapp/controllers/delivery_controllers/orders_controller.dart';
 
 import 'package:taxiapp/core/fetchApi.dart';
+import 'package:taxiapp/services/services.dart';
 
 class MyBinding implements Bindings {
   @override
   void dependencies() {
     // Get.put(ThemeController());
+    
     
     Get.put(AuthController());
     Get.put(FetchApi());

@@ -38,7 +38,7 @@ class HistoryTitleLocationNumber extends StatelessWidget {
                 ),
                 HistoryLocationTitle(
                   themeText: themeText,
-                  title: location,
+                  title: location ,
                 ),
               ],
             ),

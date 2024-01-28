@@ -4,17 +4,17 @@ import 'package:taxiapp/controllers/user_controller.dart';
 
 class PersonalInformationWidget extends StatelessWidget {
   PersonalInformationWidget({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final UserController userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Padding(        
+      child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal:MediaQuery.of(context).size.width * 0.015 ,
-          
+          horizontal: MediaQuery.of(context).size.width * 0.015,
         ),
         child: Card(
           color: const Color(0xFF268DFF),
@@ -24,7 +24,6 @@ class PersonalInformationWidget extends StatelessWidget {
                 right: 0,
                 child: Container(
                   decoration: const BoxDecoration(
-                    // color: Theme.of(context).colorScheme.surface,
                     color: Color(0xFF439FFF),
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(15),
@@ -33,11 +32,14 @@ class PersonalInformationWidget extends StatelessWidget {
                   ),
                   width: MediaQuery.of(context).size.width * 0.65,
                   height: MediaQuery.of(context).size.height * 0.29,
-                  // height:240,
                 ),
               ),
               GetBuilder<UserController>(
                 builder: (_) {
+                  final fullName =
+                      _.user?['full_name'] ?? ''; // Handle null for full_name
+                  final phone = _.user?['phone'] ?? ''; // Handle null for phone
+
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +51,7 @@ class PersonalInformationWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                _.user!['full_name'],
+                                fullName,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!
@@ -57,14 +59,12 @@ class PersonalInformationWidget extends StatelessWidget {
                                         fontSize: 13, color: Colors.white),
                               ),
                               Text(
-                                _.user!['phone'],
+                                phone,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!
                                     .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                    ),
+                                        color: Colors.white, fontSize: 13),
                               )
                             ],
                           ),

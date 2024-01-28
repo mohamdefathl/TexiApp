@@ -1,7 +1,7 @@
 class DeliveryOrdersStatics {
   final int day;
-  final double mounth;
-  final double year;
+  final int mounth;
+  final int year;
 
   DeliveryOrdersStatics({
     required this.day,

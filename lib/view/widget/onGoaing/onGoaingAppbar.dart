@@ -19,6 +19,7 @@ class onGoaingAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       toolbarHeight: MediaQuery.of(context).size.height * 0.1,
       title: Stack(
         children: [
